@@ -6,7 +6,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>com.mybatis.common.example</artifactId>
+    <artifactId>mybatis-common-example</artifactId>
 
     <name>mybatis::common::example</name>
 

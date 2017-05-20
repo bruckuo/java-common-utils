@@ -1,6 +1,7 @@
 package com.mybatis.common.example;
 
 import com.alibaba.fastjson.JSON;
+import com.mybatis.common.domain.Page;
 import com.mybatis.common.example.dao.PersonDao;
 import com.mybatis.common.example.domain.criteria.PersonCriteria;
 import com.mybatis.common.example.domain.entity.PersonEntity;
@@ -33,6 +34,17 @@ public class PersonDaoTest {
         query.setId(1L);
         PersonEntity personEntity = this.personDao.selectOne(query);
         LOGGER.info(JSON.toJSONString(personEntity));
+
+    }
+
+    @Test
+    public void selectPageTest() {
+        PersonCriteria query = new PersonCriteria();
+        query.setAge(25);
+
+        Page<PersonEntity> page = this.personDao.pageSelect(query, 1, 10);
+
+        LOGGER.info(JSON.toJSONString(page));
 
     }
 }

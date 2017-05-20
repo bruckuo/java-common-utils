@@ -1,13 +1,13 @@
 package com.mybatis.common.example.domain.entity;
 
-import com.mybatis.common.domain.BaseEntityBean;
+import com.mybatis.common.domain.EntityBean;
 
 /**
  * @ description:
  * @ author: guojiang.xiong
  * @ created: 2017-05-20 下午12:13
  */
-public class PersonEntity extends BaseEntityBean {
+public class PersonEntity extends EntityBean {
     /**
      * id
      */
