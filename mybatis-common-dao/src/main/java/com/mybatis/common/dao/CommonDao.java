@@ -22,55 +22,55 @@ public interface CommonDao<M extends Criteria, C extends M, PK> {
     int DEFAULT_PAGE_SIZE = 10;
     String IBATIS_PROPERYTY_PREFIX = "_";
 
-    int save(M var1);
+    int save(M modelEntry);
 
-    int saveAll(List<M> var1);
+    int saveAll(List<M> entityList);
 
-    int update(M var1, M var2);
+    int update(M modelEntry, M modelQuery);
 
-    int update(M var1);
+    int update(M modelEntry);
 
-    int updateAll(List<M> var1);
+    int updateAll(List<M> entityList);
 
-    int saveOrUpdate(M var1);
+    int saveOrUpdate(M m);
 
-    int saveOrUpdate(List<M> var1);
+    int saveOrUpdate(List<M> entryList);
 
-    int delete(PK var1);
+    int delete(PK pk);
 
-    int delete(M var1);
+    int delete(M m);
 
-    M get(PK var1);
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    int count(M var1);
+    M get(PK pk);
 
     /**
      * @deprecated
      */
     @Deprecated
-    List<M> findList(M var1);
+    int count(M m);
 
     /**
      * @deprecated
      */
     @Deprecated
-    List<M> findList(M var1, int var2, int var3);
+    List<M> findList(M m);
 
     /**
      * @deprecated
      */
     @Deprecated
-    PageBean<M> pageQuery(M var1, PageBean<M> var2);
+    List<M> findList(M modelQuery, int pn, int pageSize);
 
     /**
      * @deprecated
      */
     @Deprecated
-    Page<M> pageQuery(M var1, Integer var2, Integer var3);
+    PageBean<M> pageQuery(M modelQuery, PageBean<M> pageBean);
+
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    Page<M> pageQuery(M modelQuery, Integer offset, Integer limit);
 
     /**
      * @deprecated
@@ -78,16 +78,30 @@ public interface CommonDao<M extends Criteria, C extends M, PK> {
     @Deprecated
     M findOne(M var1);
 
-    boolean exists(PK var1);
+    boolean exists(PK c);
 
-    int totalCount(C var1);
+    int totalCount(C c);
 
-    M selectOne(C var1);
+    M selectOne(C c);
 
-    List<M> selectList(C var1);
+    List<M> selectList(C c);
 
-    List<M> selectList(C var1, int var2, int var3);
+    /**
+     * 查询
+     * @param modelQuery 条件
+     * @param pageNo 页数
+     * @param pageSize 条数
+     * @return list
+     */
+    List<M> selectList(C modelQuery, int pageNo, int pageSize);
 
-    Page<M> pageSelect(C var1, Integer var2, Integer var3);
+    /**
+     * 分页查询
+     * @param modelQuery 查询条件
+     * @param offset 页数
+     * @param limit 查询数量
+     * @return page
+     */
+    Page<M> pageSelect(C modelQuery, Integer offset, Integer limit);
 }
 

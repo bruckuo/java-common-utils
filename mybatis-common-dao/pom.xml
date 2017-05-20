@@ -8,9 +8,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>mybatis-common-dao</artifactId>
-    <packaging>pom</packaging>
-
     <name>mybatis::common::dao</name>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

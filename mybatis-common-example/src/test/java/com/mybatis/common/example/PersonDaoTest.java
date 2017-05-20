@@ -42,7 +42,7 @@ public class PersonDaoTest {
         PersonCriteria query = new PersonCriteria();
         query.setAge(25);
 
-        Page<PersonEntity> page = this.personDao.pageSelect(query, 1, 10);
+        Page<PersonEntity> page = this.personDao.pageSelect(query, 2, 1);
 
         LOGGER.info(JSON.toJSONString(page));
 

@@ -7,10 +7,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>mybatis-common-example</artifactId>
-
     <name>mybatis::common::example</name>
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
