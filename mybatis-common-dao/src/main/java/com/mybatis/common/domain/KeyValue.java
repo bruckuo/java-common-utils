@@ -1,0 +1,34 @@
+package com.mybatis.common.domain;
+
+import java.io.Serializable;
+
+/**
+ * @ description:
+ * @ author: guojiang.xiong
+ * @ created: 2017-05-19 下午5:34
+ */
+public class KeyValue<T, M> implements Serializable {
+    private T key;
+    private M value;
+
+    public KeyValue(T key, M value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public T getKey() {
+        return this.key;
+    }
+
+    public void setKey(T key) {
+        this.key = key;
+    }
+
+    public M getValue() {
+        return this.value;
+    }
+
+    public void setValue(M value) {
+        this.value = value;
+    }
+}

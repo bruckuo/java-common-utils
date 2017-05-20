@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- recommended not modified but can be added ,Please contact liuhuiqing@jd.com for good advice.-->
+<mapper namespace="personMapper">
+    <resultMap id="personMap" type="com.mybatis.common.example.domain.entity.PersonEntity">
+        <result column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
+        <result column="age" property="age" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="create_pin" property="createPin" jdbcType="VARCHAR" javaType="String"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="update_pin" property="updatePin" jdbcType="VARCHAR" javaType="String"/>
+        <result column="yn" property="yn" jdbcType="TINYINT" javaType="Integer"/>
+    </resultMap>
+
+    <sql id="select-all-column">
+        SELECT
+        id AS id,
+        name AS name,
+        age AS age,
+        create_time AS createTime,
+        create_pin AS createPin,
+        update_time AS updateTime,
+        update_pin AS updatePin,
+        yn AS yn
+        FROM person
+    </sql>
+
+    <sql id="where-all-condition">
+        1=1
+        <if test="id != null">
+            and id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="name != null and name != ''">
+            and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="age != null">
+            and age = #{age,jdbcType=INTEGER}
+        </if>
+        <if test="createTime != null">
+            and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createPin != null and createPin != ''">
+            and create_pin = #{createPin,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime != null">
+            and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updatePin != null and updatePin != ''">
+            and update_pin = #{updatePin,jdbcType=VARCHAR}
+        </if>
+        <if test="yn != null">
+            and yn = #{yn,jdbcType=TINYINT}
+        </if>
+    </sql>
+
+    <select id="selectPerson" parameterType="com.mybatis.common.example.domain.criteria.PersonCriteria" resultMap="personMap">
+        <include refid="select-all-column"/>
+        <where>
+            <include refid="where-all-condition"/>
+            <include refid="commonRoadMapper.sortSql"/>
+            <include refid="commonRoadMapper.pagingLimit"/>
+        </where>
+    </select>
+
+    <select id="selectOnePerson" parameterType="java.lang.Long" resultMap="personMap">
+        <include refid="select-all-column"/>
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="countPerson" parameterType="com.mybatis.common.example.domain.criteria.PersonCriteria"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM person
+        <where>
+            <include refid="where-all-condition"/>
+        </where>
+    </select>
+
+    <insert id="insertPerson" parameterType="com.mybatis.common.example.domain.entity.PersonEntity" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO person (
+        <if test="name != null">
+            name,
+        </if>
+        <if test="age != null">
+            age,
+        </if>
+        <if test="createPin != null">
+            create_pin,
+        </if>
+        <if test="updatePin != null">
+            update_pin,
+        </if>
+        <if test="yn != null">
+            yn,
+        </if>
+        create_time,
+        update_time
+        ) VALUES (
+        <if test="name != null">
+            #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="age != null">
+            #{age,jdbcType=INTEGER},
+        </if>
+        <if test="createPin != null">
+            #{createPin,jdbcType=VARCHAR},
+        </if>
+        <if test="updatePin != null">
+            #{updatePin,jdbcType=VARCHAR},
+        </if>
+        <if test="yn != null">
+            #{yn,jdbcType=TINYINT},
+        </if>
+        now(),
+        now()
+        )
+    </insert>
+
+    <insert id="insertPersonBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            SELECT
+            LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO person (
+        name,
+        age,
+        create_pin,
+        update_pin,
+        yn,
+        create_time,
+        update_time
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.name,jdbcType=VARCHAR},
+            #{item.age,jdbcType=INTEGER},
+            #{item.createPin,jdbcType=VARCHAR},
+            #{item.updatePin,jdbcType=VARCHAR},
+            #{item.yn,jdbcType=TINYINT},
+            now(),
+            now()
+            )
+        </foreach>
+    </insert>
+
+    <update id="updatePerson" parameterType="java.util.Map">
+        UPDATE person
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createPin != null">
+                create_pin = #{createPin,jdbcType=VARCHAR},
+            </if>
+            <if test="updatePin != null">
+                update_pin = #{updatePin,jdbcType=VARCHAR},
+            </if>
+            <if test="yn != null">
+                yn = #{yn,jdbcType=TINYINT},
+            </if>
+            sys_version = sys_version + 1,
+            update_time =now()
+        </set>
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updatePersonBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update person
+            <set>
+                <if test="item.name != null">
+                    name = #{item.name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.age != null">
+                    age = #{item.age,jdbcType=INTEGER},
+                </if>
+                <if test="item.createTime != null">
+                    create_time = #{item.createTime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.createPin != null">
+                    create_pin = #{item.createPin,jdbcType=VARCHAR},
+                </if>
+                <if test="item.updatePin != null">
+                    update_pin = #{item.updatePin,jdbcType=VARCHAR},
+                </if>
+                <if test="item.yn != null">
+                    yn = #{item.yn,jdbcType=TINYINT},
+                </if>
+                sys_version = sys_version + 1,
+                update_time =now()
+            </set>
+            WHERE
+            id = #{item.id,jdbcType=BIGINT}
+
+        </foreach>
+    </update>
+
+    <delete id="deletePerson" parameterType="com.mybatis.common.example.domain.criteria.PersonCriteria">
+        DELETE FROM person
+        WHERE
+        <include refid="where-all-condition"/>
+    </delete>
+
+    <delete id="deleteOnePerson" parameterType="java.lang.Long">
+        DELETE FROM person
+        WHERE
+        id = #{id,jdbcType=BIGINT}
+    </delete>
+</mapper>
