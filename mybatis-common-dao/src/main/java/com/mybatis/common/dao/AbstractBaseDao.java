@@ -109,12 +109,12 @@ public abstract class AbstractBaseDao<M extends Criteria, PK> extends SqlSession
         Assert.notNull(pageBean, "分页条件不能为空.");
         int count = this.count(this.sql_count, modelQuery);
         pageBean.setTotalCount((long) count);
-        if (count == 0) {
+
+        if (count == 0)
             return pageBean;
-        } else {
-            pageBean.setResultList(this.findList(this.sql_select, modelQuery, (int) pageBean.getPageNo(), pageBean.getPageSize()));
-            return pageBean;
-        }
+
+        pageBean.setResultList(this.findList(this.sql_select, modelQuery, (int) pageBean.getPageNo(), pageBean.getPageSize()));
+        return pageBean;
     }
 
     public Page<M> pageQuery(M modelQuery, Integer offset, Integer limit) {
@@ -122,12 +122,14 @@ public abstract class AbstractBaseDao<M extends Criteria, PK> extends SqlSession
         Assert.notNull(modelQuery, "查询条件不能为空.");
         int count = this.count(this.sql_count, modelQuery);
         page.setTotal(count);
-        if (count == 0) {
-            return page;
-        } else {
+
+        if (count > 0) {
+            //查询结果
             page.setRows(this.findList4Offset(this.sql_select, modelQuery, offset, limit));
             return page;
         }
+        return page;
+
     }
 
     public M findOne(M modelQuery) {
@@ -150,28 +152,25 @@ public abstract class AbstractBaseDao<M extends Criteria, PK> extends SqlSession
         int effectCount = 0;
         if (CollectionUtils.isEmpty(entityList)) {
             return effectCount;
-        } else {
-            List<M> addList = new ArrayList<M>();
-            List<M> updateList = new ArrayList<M>();
-
-            for (M modelEntry : entityList) {
-                if (this.getPrimaryFieldValue(modelEntry) == null) {
-                    addList.add(modelEntry);
-                } else {
-                    updateList.add(modelEntry);
-                }
-            }
-
-            if (CollectionUtils.isNotEmpty(addList)) {
-                effectCount += this.saveAll(insertStatement, addList);
-            }
-
-            if (CollectionUtils.isNotEmpty(updateList)) {
-                effectCount += this.updateAll(updateStatement, updateList);
-            }
-
-            return effectCount;
         }
+
+        List<M> addList = new ArrayList<M>();
+        List<M> updateList = new ArrayList<M>();
+        for (M modelEntry : entityList) {
+            if (this.getPrimaryFieldValue(modelEntry) == null) {
+                addList.add(modelEntry);
+            } else {
+                updateList.add(modelEntry);
+            }
+        }
+        if (CollectionUtils.isNotEmpty(addList)) {
+            effectCount += this.saveAll(insertStatement, addList);
+        }
+
+        if (CollectionUtils.isNotEmpty(updateList)) {
+            effectCount += this.updateAll(updateStatement, updateList);
+        }
+        return effectCount;
     }
 
     protected int count(String statement, Criteria criteria) {
@@ -266,7 +265,6 @@ public abstract class AbstractBaseDao<M extends Criteria, PK> extends SqlSession
         Field field = this.findPrimaryField(clazz);
         if (null == field)
             throw new RuntimeException("方法不支持该实体对象的[保存或更新]操作");
-
         field.setAccessible(true);
         try {
             return field.get(modelEntry);
