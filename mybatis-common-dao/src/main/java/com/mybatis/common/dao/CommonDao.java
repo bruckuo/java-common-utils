@@ -36,23 +36,23 @@ public interface CommonDao<M extends Criteria, C extends M, PK> {
 
     int saveOrUpdate(List<M> entryList);
 
-    int delete(PK pk);
+    int delete(PK id);
 
-    int delete(M m);
+    int delete(M modelQuery);
 
-    M get(PK pk);
-
-    /**
-     * @deprecated
-     */
-    @Deprecated
-    int count(M m);
+    M get(PK id);
 
     /**
      * @deprecated
      */
     @Deprecated
-    List<M> findList(M m);
+    int count(M modelQuery);
+
+    /**
+     * @deprecated
+     */
+    @Deprecated
+    List<M> findList(M modelQuery);
 
     /**
      * @deprecated
@@ -76,15 +76,15 @@ public interface CommonDao<M extends Criteria, C extends M, PK> {
      * @deprecated
      */
     @Deprecated
-    M findOne(M var1);
+    M findOne(M modelQuery);
 
-    boolean exists(PK c);
+    boolean exists(PK id);
 
-    int totalCount(C c);
+    int totalCount(C modelQuery);
 
-    M selectOne(C c);
+    M selectOne(C modelQuery);
 
-    List<M> selectList(C c);
+    List<M> selectList(C modelQuery);
 
     /**
      * 查询

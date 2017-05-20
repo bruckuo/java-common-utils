@@ -41,34 +41,16 @@ public class PersonEntity extends EntityBean {
     public void setAge(Integer age){
         this.age = age;
     }
-    public java.util.Date getCreateTime(){
-        return createTime;
-    }
-    public void setCreateTime(java.util.Date createTime){
-        this.createTime = createTime;
-    }
     public String getCreatePin(){
         return createPin;
     }
     public void setCreatePin(String createPin){
         this.createPin = createPin;
     }
-    public java.util.Date getUpdateTime(){
-        return updateTime;
-    }
-    public void setUpdateTime(java.util.Date updateTime){
-        this.updateTime = updateTime;
-    }
     public String getUpdatePin(){
         return updatePin;
     }
     public void setUpdatePin(String updatePin){
         this.updatePin = updatePin;
-    }
-    public Integer getYn(){
-        return yn;
-    }
-    public void setYn(Integer yn){
-        this.yn = yn;
     }
 }
