@@ -13,9 +13,6 @@ public class AppContext implements Serializable {
     private String version;
     private String token;
 
-    public AppContext() {
-    }
-
     public String getSysSource() {
         return this.sysSource;
     }

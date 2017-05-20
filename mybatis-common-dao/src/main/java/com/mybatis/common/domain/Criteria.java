@@ -17,14 +17,10 @@ public class Criteria implements Serializable {
     private List<KeyValue<String, String>> sortItemMap;
     private Map<String, Object> extFields;
 
-    public Criteria() {
-    }
-
     public <C extends Criteria> C addExtField(String fieldName, Object filedValue) {
         if (this.extFields == null) {
-            this.extFields = new HashMap();
+            this.extFields = new HashMap<String, Object>();
         }
-
         this.extFields.put(fieldName, filedValue);
         return (C) this;
     }

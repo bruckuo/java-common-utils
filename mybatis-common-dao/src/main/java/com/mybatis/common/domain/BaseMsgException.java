@@ -16,6 +16,9 @@ public class BaseMsgException extends RuntimeException {
     private Object[] args;
     private String defaultMessage;
 
+    public BaseMsgException() {
+    }
+
     public BaseMsgException(String module, String code, Object[] args, String defaultMessage) {
         this.module = module;
         this.code = code;

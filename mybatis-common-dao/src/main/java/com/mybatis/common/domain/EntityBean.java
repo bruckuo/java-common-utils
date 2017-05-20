@@ -7,7 +7,7 @@ import java.util.Date;
  * @ author: guojiang.xiong
  * @ created: 2017-05-19 下午5:30
  */
-public class BaseEntityBean extends Criteria {
+public class EntityBean extends Criteria {
     private static final long serialVersionUID = -7793739903799136331L;
     private Integer sysVersion;
     private Date createTime;
@@ -15,9 +15,6 @@ public class BaseEntityBean extends Criteria {
     private String createUser;
     private String updateUser;
     private Integer yn;
-
-    public BaseEntityBean() {
-    }
 
     public Integer getSysVersion() {
         return this.sysVersion;
@@ -67,7 +64,7 @@ public class BaseEntityBean extends Criteria {
         this.yn = yn;
     }
 
-    public BaseEntityBean init() {
+    public EntityBean init() {
         this.createUser = "";
         this.updateUser = "";
         this.yn = 1;
